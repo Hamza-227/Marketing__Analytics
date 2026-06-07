@@ -1,2 +1,1 @@
-# E-Commerce Sales & Profitability Analysis
-
+# DataAnalystPortfolioProject_PBI_SQL_Python_MarketingAnalytics
