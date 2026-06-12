@@ -36,17 +36,17 @@ ShopEasy, an online retail business, faced **declining customer engagement and c
 ```
 📁 marketing-analytics/
 │
-├── 📊 Episode_1 - Marketing_Analytics_Business_Case.pptx   # Business case & KPI definition
-├── 🗄️ dim_customers.sql                                     # Customer + geography JOIN query
-├── 🗄️ dim_products.sql                                      # Product price categorization
-├── 🗄️ fact_customer_journey.sql                             # Journey deduplication & cleaning
-├── 🗄️ fact_customer_reviews.sql                             # Reviews whitespace cleaning
-├── 🗄️ fact_engagement_data.sql                              # Engagement data normalization
-├── 🐍 Episode_3 - customer_reviews_enrichment.py            # VADER sentiment analysis pipeline
-├── 📄 Episode_3 - fact_customer_reviews_enrich.csv          # Enriched reviews output
-├── 📊 Episode_4 - Dashboard.pbix                            # Interactive Power BI dashboard
-├── 📝 Episode_4 - Calendar_DAX_Script.txt                   # Custom DAX calendar table
-└── 📊 Episode_5 - Presentation_Example.pptx                 # Final findings presentation
+├── 📊 01_business_case_and_kpis.pptx           # Business case & KPI definition
+├── 🗄️ 02_sql_dim_customers.sql                  # Customer + geography JOIN query
+├── 🗄️ 03_sql_dim_products.sql                   # Product price categorization
+├── 🗄️ 04_sql_fact_customer_journey.sql          # Journey deduplication & cleaning
+├── 🗄️ 05_sql_fact_customer_reviews.sql          # Reviews whitespace cleaning
+├── 🗄️ 06_sql_fact_engagement_data.sql           # Engagement data normalization
+├── 🐍 07_python_sentiment_analysis.py           # VADER sentiment analysis pipeline
+├── 📄 08_output_reviews_with_sentiment.csv      # Enriched reviews output
+├── 📊 10_powerbi_dashboard.pbix                 # Interactive Power BI dashboard
+├── 📝 09_dax_calendar_table.txt                 # Custom DAX calendar table
+└── 📊 11_final_presentation.pptx                # Final findings presentation
 ```
 
 ---
@@ -89,33 +89,33 @@ The project spans four core fact/dimension tables sourced from `PortfolioProject
 
 Five SQL scripts handle all upstream data preparation:
 
-**`dim_customers.sql`** — LEFT JOIN between `customers` and `geography` tables to enrich records with `Country` and `City` fields.
+**`02_sql_dim_customers.sql`** — LEFT JOIN between `customers` and `geography` tables to enrich records with `Country` and `City` fields.
 
-**`dim_products.sql`** — CASE statement to segment products into `Low` (<$50), `Medium` ($50–$200), and `High` (>$200) price categories.
+**`03_sql_dim_products.sql`** — CASE statement to segment products into `Low` (<$50), `Medium` ($50–$200), and `High` (>$200) price categories.
 
-**`fact_customer_journey.sql`** — CTE with `ROW_NUMBER()` to detect and remove duplicate journey entries; `COALESCE` to impute missing `Duration` values using per-date averages; `UPPER(Stage)` for consistent casing.
+**`04_sql_fact_customer_journey.sql`** — CTE with `ROW_NUMBER()` to detect and remove duplicate journey entries; `COALESCE` to impute missing `Duration` values using per-date averages; `UPPER(Stage)` for consistent casing.
 
-**`fact_customer_reviews.sql`** — `REPLACE(ReviewText, '  ', ' ')` to clean double-space whitespace artifacts in review text.
+**`05_sql_fact_customer_reviews.sql`** — `REPLACE(ReviewText, '  ', ' ')` to clean double-space whitespace artifacts in review text.
 
-**`fact_engagement_data.sql`** — Splits the combined `ViewsClicksCombined` column into separate `Views` and `Clicks` columns using `LEFT`/`RIGHT`/`CHARINDEX`; standardizes `ContentType` formatting; formats `EngagementDate` to `dd.MM.yyyy`; filters out `Newsletter` content type.
+**`06_sql_fact_engagement_data.sql`** — Splits the combined `ViewsClicksCombined` column into separate `Views` and `Clicks` columns using `LEFT`/`RIGHT`/`CHARINDEX`; standardizes `ContentType` formatting; formats `EngagementDate` to `dd.MM.yyyy`; filters out `Newsletter` content type.
 
 ---
 
 ## 🐍 Python — Sentiment Analysis Pipeline
 
-Performed in `customer_reviews_enrichment.py` using **NLTK VADER**:
+Performed in `07_python_sentiment_analysis.py` using **NLTK VADER**:
 
 - **Data Ingestion:** Connected to SQL Server via `pyodbc` to fetch `fact_customer_reviews`
 - **Sentiment Scoring:** Applied VADER `SentimentIntensityAnalyzer` to produce compound scores (–1.0 to +1.0) for each review
 - **Sentiment Categorization:** Combined text score + star rating into 5 categories: `Positive`, `Negative`, `Mixed Positive`, `Mixed Negative`, `Neutral`
 - **Sentiment Bucketing:** Grouped compound scores into four ranges: `0.5–1.0`, `0.0–0.49`, `–0.49–0.0`, `–1.0–0.5`
-- **Output:** Exported enriched dataset to `fact_customer_reviews_with_sentiment.csv` for Power BI ingestion
+- **Output:** Exported enriched dataset to `08_output_reviews_with_sentiment.csv` for Power BI ingestion
 
 ---
 
 ## 📊 Power BI Dashboard
 
-Built in `Episode_4 - Dashboard.pbix` with a custom DAX calendar table spanning **2023–2025**:
+Built in `10_powerbi_dashboard.pbix` with a custom DAX calendar table spanning **2023–2025** (defined in `09_dax_calendar_table.txt`):
 
 **Calendar Table (DAX)** — `ADDCOLUMNS(CALENDAR(...))` generates columns for Year, Month Number, Quarter, Day of Week, and formatted date variants to support all time-intelligence measures.
 
@@ -167,7 +167,7 @@ Conversion rebounded strongly to 10.2% in December. Analyze what drove this (pro
 
 ## 👤 Author
 
-**Hamza Anjum**  
+**Hamza Anjum**
 Data Analyst | Python · SQL · Power BI
 
 <p>
@@ -179,7 +179,7 @@ Data Analyst | Python · SQL · Power BI
     <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
   </a>
   &nbsp;
-  <a href="mailto:hamzaanjum650@gmail.com">
+  <a href="mailto:hamzaanjum664@gmail.com">
     <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/>
   </a>
 </p>
