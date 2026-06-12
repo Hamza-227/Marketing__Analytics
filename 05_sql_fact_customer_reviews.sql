@@ -1,3 +1,8 @@
+USE PortfolioProject_MarketingAnalytics;
+SELECT
+*
+FROM dbo.customer_reviews;
+SELECT COUNT(REVIEWID) FROM dbo.customer_reviews;
 -- Query to clean whitespace issues in the ReviewText column
 
 SELECT 
