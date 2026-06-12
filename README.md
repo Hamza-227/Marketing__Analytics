@@ -157,13 +157,6 @@ Conversion rebounded strongly to 10.2% in December. Analyze what drove this (pro
 **6. Leverage Positive Reviews as Social Proof**
 275 Positive reviews and strong 4–5 star ratings are an underutilized asset. Incorporate review highlights into campaign creatives and product pages to reinforce trust and conversion signals.
 
----
-
-## 💼 Resume Line
-
-> Analyzed multi-source marketing data (customer journey, reviews, engagement) for an e-commerce client to identify conversion and engagement gaps. Built a sentiment analysis pipeline using Python (NLTK VADER) to classify 500+ customer reviews. Wrote T-SQL transformations for data cleaning, deduplication, and normalization across four fact/dimension tables. Developed a Power BI dashboard with a custom DAX calendar table to track KPIs including conversion rate, CTR, and customer feedback score — surfacing a 10.2% conversion peak in December vs. a 4.3% low in May and actionable content engagement insights.
-
----
 
 ## 👤 Author
 
