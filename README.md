@@ -37,7 +37,7 @@ I treated this like a real pipeline rather than a one-off analysis: clean the ra
 ### Overview
 The overview ties conversion, social media, and review KPIs together at a glance. 2024 closed with an **8.5% overall conversion rate**, **2.98M views**, **458K clicks (15.37% CTR)**, and an **average rating of 3.7**.
 
-![Overview Dashboard](images/1.png)
+![Overview Dashboard](images/1.png.png)
 
 - 📉 **Lowest Conversion Month:** May at **4.3%** — no standout product performance
 - 📈 **Best Conversion Month:** December at **10.2%** — strong end-of-year rebound
@@ -54,7 +54,7 @@ Drilling into the funnel (View → Click → Drop-off → Purchase) shows where 
 ### Social Media Details
 Views, clicks, and likes broken down by month, product, and content type (Blog, Social Media, Video).
 
-![Social Media Details Dashboard](images/3_png.png)
+![Social Media Details Dashboard](images/3.png.png)
 
 - 🖱️ **Click-Through Rate:** 15.37% — engaged users still interact effectively once they click through
 - 🔍 **Low Interaction Rate:** Likes sit at just **2.47%** of views — a wide gap between passive viewing and active engagement
