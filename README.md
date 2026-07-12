@@ -37,7 +37,7 @@ I treated this like a real pipeline rather than a one-off analysis: clean the ra
 ### Overview
 The overview ties conversion, social media, and review KPIs together at a glance. 2024 closed with an **8.5% overall conversion rate**, **2.98M views**, **458K clicks (15.37% CTR)**, and an **average rating of 3.7**.
 
-![Overview Dashboard](images/1_png.png)
+![Overview Dashboard](images/1.png)
 
 - 📉 **Lowest Conversion Month:** May at **4.3%** — no standout product performance
 - 📈 **Best Conversion Month:** December at **10.2%** — strong end-of-year rebound
@@ -46,7 +46,7 @@ The overview ties conversion, social media, and review KPIs together at a glance
 ### Conversion Details
 Drilling into the funnel (View → Click → Drop-off → Purchase) shows where customers fall off, and which products convert best.
 
-![Conversion Details Dashboard](images/2_png.png)
+![Conversion Details Dashboard](images/2.png.png)
 
 - **Kayak** leads product conversion at **21.4%**, followed by **Ski Boots (20.0%)** and **Surfboard (13.9%)**
 - Conversion by month is volatile month-to-month per product, suggesting seasonal/promotional effects rather than steady demand
