@@ -16,6 +16,30 @@ ShopEasy, an online retail business, faced **declining customer engagement and c
 
 ---
 
+## 📊 Power BI Dashboard Preview
+
+### Overview
+High-level view of Conversion, Social Media, and Customer Review KPIs across the year, with monthly and product-level breakdowns.
+
+![Overview Dashboard](images/1_png.png)
+
+### Conversion Details
+Drill-down into the customer journey funnel (View → Click → Drop-off → Purchase) and conversion rate by product and month.
+
+![Conversion Details Dashboard](images/2_png.png)
+
+### Social Media Details
+Views, clicks, and likes broken down by month, product, and content type (Blog, Social Media, Video).
+
+![Social Media Details Dashboard](images/3_png.png)
+
+### Customer Review Details
+Rating distribution, sentiment category breakdown, and a bubble chart correlating rating average with review volume.
+
+![Customer Review Details Dashboard](images/4_png.png)
+
+---
+
 ## 💡 Key Findings
 
 | Insight | Finding |
@@ -46,7 +70,12 @@ ShopEasy, an online retail business, faced **declining customer engagement and c
 ├── 📄 08_output_reviews_with_sentiment.csv      # Enriched reviews output
 ├── 📊 10_powerbi_dashboard.pbix                 # Interactive Power BI dashboard
 ├── 📝 09_dax_calendar_table.txt                 # Custom DAX calendar table
-└── 📊 11_final_presentation.pptx                # Final findings presentation
+├── 📊 11_final_presentation.pptx                # Final findings presentation
+└── 🖼️ images/                                   # Dashboard screenshots
+    ├── 1_png.png                                # Overview
+    ├── 2_png.png                                # Conversion Details
+    ├── 3_png.png                                # Social Media Details
+    └── 4_png.png                                # Customer Review Details
 ```
 
 ---
