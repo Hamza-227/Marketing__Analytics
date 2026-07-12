@@ -37,7 +37,7 @@ I treated this like a real pipeline rather than a one-off analysis: clean the ra
 ### Overview
 The overview ties conversion, social media, and review KPIs together at a glance. 2024 closed with an **8.5% overall conversion rate**, **2.98M views**, **458K clicks (15.37% CTR)**, and an **average rating of 3.7**.
 
-![Overview Dashboard](images/1.png.png)
+![Overview Dashboard](images/1.png)
 
 - 📉 **Lowest Conversion Month:** May at **4.3%** — no standout product performance
 - 📈 **Best Conversion Month:** December at **10.2%** — strong end-of-year rebound
@@ -46,7 +46,7 @@ The overview ties conversion, social media, and review KPIs together at a glance
 ### Conversion Details
 Drilling into the funnel (View → Click → Drop-off → Purchase) shows where customers fall off, and which products convert best.
 
-![Conversion Details Dashboard](images/2.png.png)
+![Conversion Details Dashboard](images/2.png)
 
 - **Kayak** leads product conversion at **21.4%**, followed by **Ski Boots (20.0%)** and **Surfboard (13.9%)**
 - Conversion by month is volatile month-to-month per product, suggesting seasonal/promotional effects rather than steady demand
@@ -54,7 +54,7 @@ Drilling into the funnel (View → Click → Drop-off → Purchase) shows where 
 ### Social Media Details
 Views, clicks, and likes broken down by month, product, and content type (Blog, Social Media, Video).
 
-![Social Media Details Dashboard](images/3.png.png)
+![Social Media Details Dashboard](images/3.png)
 
 - 🖱️ **Click-Through Rate:** 15.37% — engaged users still interact effectively once they click through
 - 🔍 **Low Interaction Rate:** Likes sit at just **2.47%** of views — a wide gap between passive viewing and active engagement
@@ -63,7 +63,7 @@ Views, clicks, and likes broken down by month, product, and content type (Blog, 
 ### Customer Review Details
 Rating distribution, sentiment breakdown, and a bubble chart correlating average rating with review volume.
 
-![Customer Review Details Dashboard](images/4_png.png)
+![Customer Review Details Dashboard](images/4.png)
 
 - ⭐ **Top Ratings:** 140 reviews at 4★ and 135 reviews at 5★ — a majority-positive base
 - 😊 **Positive Sentiment:** 275 reviews classified Positive via VADER
@@ -98,7 +98,7 @@ Conversion rebounded strongly to 10.2% in December. Analyze what drove this (pro
 ```
 📁 marketing-analytics/
 │
-├── 📊 01_business_case_and_kpis.pptx           # Business case & KPI definition
+├── 📊 01_business_case_and_kpis.pptx            # Business case & KPI definition
 ├── 🗄️ 02_sql_dim_customers.sql                  # Customer + geography JOIN query
 ├── 🗄️ 03_sql_dim_products.sql                   # Product price categorization
 ├── 🗄️ 04_sql_fact_customer_journey.sql          # Journey deduplication & cleaning
@@ -110,10 +110,10 @@ Conversion rebounded strongly to 10.2% in December. Analyze what drove this (pro
 ├── 📝 09_dax_calendar_table.txt                 # Custom DAX calendar table
 ├── 📊 11_final_presentation.pptx                # Final findings presentation
 └── 🖼️ images/                                   # Dashboard screenshots
-    ├── 1_png.png                                # Overview
-    ├── 2_png.png                                # Conversion Details
-    ├── 3_png.png                                # Social Media Details
-    └── 4_png.png                                # Customer Review Details
+    ├── 1.png                                    # Overview
+    ├── 2.png                                    # Conversion Details
+    ├── 3.png                                    # Social Media Details
+    └── 4.png                                    # Customer Review Details
 ```
 
 ---
