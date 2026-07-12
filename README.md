@@ -14,44 +14,82 @@ ShopEasy, an online retail business, faced **declining customer engagement and c
 
 > *"How can ShopEasy leverage multi-source marketing data to reverse declining conversions, re-engage customers, and optimize marketing ROI?"*
 
+The raw data was scattered across five tables — customers, geography, products, customer journey, engagement, and reviews — with inconsistent formatting, duplicate entries, missing values, and unstructured text feedback. Before any insight could be drawn, the data had to be cleaned, standardized, and enriched.
+
 ---
 
-## 📊 Power BI Dashboard Preview
+## 🛠️ My Solving Process
 
-### Overview
-High-level view of Conversion, Social Media, and Customer Review KPIs across the year, with monthly and product-level breakdowns.
+I treated this like a real pipeline rather than a one-off analysis: clean the raw data, enrich it with sentiment, build a dashboard on top of it, then read across everything to land on recommendations.
 
-![Overview Dashboard](images/2.png)
+**Step 1 — Cleaning the data in SQL Server.** The raw tables were messy in the way real business data usually is: customer records with no location context, products with no price tiering, duplicate journey entries, missing durations, and inconsistent text formatting. I worked through this table by table — joining `customers` to `geography` so every record had a country and city, then bucketing products into Low/Medium/High price tiers with a simple CASE statement. The customer journey table needed the most work: I used a CTE with `ROW_NUMBER()` to catch and drop duplicate entries, then filled in missing `Duration` values with `COALESCE` against each date's average rather than leaving gaps. Reviews just needed whitespace cleanup, while the engagement data required splitting a combined `ViewsClicksCombined` column into proper `Views` and `Clicks` fields, standardizing content type labels, reformatting dates, and dropping newsletter rows that weren't relevant to the analysis.
 
-### Conversion Details
-Drill-down into the customer journey funnel (View → Click → Drop-off → Purchase) and conversion rate by product and month.
+**Step 2 — Scoring sentiment in Python.** Once the reviews were clean, I pulled them into Python via `pyodbc` and ran them through NLTK's VADER sentiment analyzer, which scores each review from –1.0 (very negative) to +1.0 (very positive). Rather than relying on that score alone, I combined it with each review's star rating to sort every review into one of five categories — Positive, Negative, Mixed Positive, Mixed Negative, or Neutral — since a 5-star review with lukewarm text and a 1-star review with sarcastic praise both need to land in the right bucket. I also grouped the raw scores into four ranges to make later filtering in Power BI easier, then exported everything to a clean CSV.
 
-![Conversion Details Dashboard](images/2.png)
+**Step 3 — Building the dashboard in Power BI.** With clean, sentiment-tagged data ready to go, I built a custom DAX calendar table covering 2023–2025 to power all the time-based comparisons, then structured the dashboard around three connected views: an overall summary, a conversion funnel breakdown, and a social media/engagement view — each filterable by year, month, and product so patterns are easy to isolate.
 
-### Social Media Details
-Views, clicks, and likes broken down by month, product, and content type (Blog, Social Media, Video).
-
-![Social Media Details Dashboard](images/3.png)
-
-### Customer Review Details
-Rating distribution, sentiment category breakdown, and a bubble chart correlating rating average with review volume.
-
-![Customer Review Details Dashboard](images/4.png)
+**Step 4 — Connecting the dots.** The real insight came from reading the three views together instead of separately. For example, the sharp drop in views after August lined up with weaker conversion months later in the year, and the negative-sentiment reviews clustered around themes (price complaints, "average" experiences) that matched up with specific underperforming products. That cross-referencing is what shaped the recommendations below, rather than treating each dashboard tab as its own isolated finding.
 
 ---
 
 ## 💡 Key Findings
 
-| Insight | Finding |
-|---|---|
-| 📉 Lowest Conversion Month | **May at 4.3%** — no standout product performance |
-| 📈 Best Conversion Month | **December at 10.2%** — strong end-of-year rebound |
-| 👁️ Engagement Decline | Views peaked in **Feb & July**, declined sharply from August onward |
-| 🖱️ Click-Through Rate | **15.37%** — engaged users still interacting effectively |
-| ⭐ Top Customer Ratings | **140 reviews at 4★** and **135 reviews at 5★** — majority positive |
-| 😊 Positive Sentiment | **275 reviews** classified as Positive via VADER sentiment analysis |
-| 😠 Negative Sentiment | **82 reviews** flagged Negative — key areas for CX improvement |
-| 🔍 Low Interaction Rate | Clicks and likes consistently low vs. views — content engagement gap identified |
+### Overview
+The overview ties conversion, social media, and review KPIs together at a glance. 2024 closed with an **8.5% overall conversion rate**, **2.98M views**, **458K clicks (15.37% CTR)**, and an **average rating of 3.7**.
+
+![Overview Dashboard](images/1_png.png)
+
+- 📉 **Lowest Conversion Month:** May at **4.3%** — no standout product performance
+- 📈 **Best Conversion Month:** December at **10.2%** — strong end-of-year rebound
+- 👁️ **Engagement Decline:** Views peaked in **Feb & July**, then declined sharply from August onward
+
+### Conversion Details
+Drilling into the funnel (View → Click → Drop-off → Purchase) shows where customers fall off, and which products convert best.
+
+![Conversion Details Dashboard](images/2_png.png)
+
+- **Kayak** leads product conversion at **21.4%**, followed by **Ski Boots (20.0%)** and **Surfboard (13.9%)**
+- Conversion by month is volatile month-to-month per product, suggesting seasonal/promotional effects rather than steady demand
+
+### Social Media Details
+Views, clicks, and likes broken down by month, product, and content type (Blog, Social Media, Video).
+
+![Social Media Details Dashboard](images/3_png.png)
+
+- 🖱️ **Click-Through Rate:** 15.37% — engaged users still interact effectively once they click through
+- 🔍 **Low Interaction Rate:** Likes sit at just **2.47%** of views — a wide gap between passive viewing and active engagement
+- Views trend down steadily after July, across almost all content types
+
+### Customer Review Details
+Rating distribution, sentiment breakdown, and a bubble chart correlating average rating with review volume.
+
+![Customer Review Details Dashboard](images/4_png.png)
+
+- ⭐ **Top Ratings:** 140 reviews at 4★ and 135 reviews at 5★ — a majority-positive base
+- 😊 **Positive Sentiment:** 275 reviews classified Positive via VADER
+- 😠 **Negative Sentiment:** 82 reviews flagged Negative, clustered around themes like pricing and "average experience"
+
+---
+
+## 📌 Business Recommendations
+
+**1. Address the May Conversion Dip**
+May showed the lowest conversion rate at 4.3% with no strong product performers. Introduce targeted promotions, time-limited offers, or improved landing pages in April–May to lift this trough.
+
+**2. Rebuild Engagement After August**
+Views peaked in February and July then declined sharply. Schedule high-impact content campaigns and seasonal pushes for Q3–Q4 to sustain audience engagement through year-end.
+
+**3. Improve Content Click-Through Quality**
+Despite a 15.37% CTR among engaged users, absolute click and like volumes remain low relative to views. A/B test stronger calls-to-action, interactive content formats, and personalized recommendations to convert passive viewers into active engagers.
+
+**4. Act on Negative Sentiment Reviews**
+82 reviews classified as Negative represent a concentrated opportunity — common themes (pricing concerns, average experience) should be used to guide product positioning, customer service scripts, and post-purchase follow-up sequences.
+
+**5. Replicate December's Success Earlier in the Year**
+Conversion rebounded strongly to 10.2% in December. Analyze what drove this (promotions, product mix, campaigns) and apply those levers to under-performing months like May and October.
+
+**6. Leverage Positive Reviews as Social Proof**
+275 Positive reviews and strong 4–5 star ratings are an underutilized asset. Incorporate review highlights into campaign creatives and product pages to reinforce trust and conversion signals.
 
 ---
 
@@ -113,79 +151,6 @@ The project spans four core fact/dimension tables sourced from `PortfolioProject
 - **Customer Feedback Score** — Average rating from customer reviews
 
 ---
-
-## 🗄️ SQL — Data Cleaning & Transformation
-
-Five SQL scripts handle all upstream data preparation:
-
-**`02_sql_dim_customers.sql`** — LEFT JOIN between `customers` and `geography` tables to enrich records with `Country` and `City` fields.
-
-**`03_sql_dim_products.sql`** — CASE statement to segment products into `Low` (<$50), `Medium` ($50–$200), and `High` (>$200) price categories.
-
-**`04_sql_fact_customer_journey.sql`** — CTE with `ROW_NUMBER()` to detect and remove duplicate journey entries; `COALESCE` to impute missing `Duration` values using per-date averages; `UPPER(Stage)` for consistent casing.
-
-**`05_sql_fact_customer_reviews.sql`** — `REPLACE(ReviewText, '  ', ' ')` to clean double-space whitespace artifacts in review text.
-
-**`06_sql_fact_engagement_data.sql`** — Splits the combined `ViewsClicksCombined` column into separate `Views` and `Clicks` columns using `LEFT`/`RIGHT`/`CHARINDEX`; standardizes `ContentType` formatting; formats `EngagementDate` to `dd.MM.yyyy`; filters out `Newsletter` content type.
-
----
-
-## 🐍 Python — Sentiment Analysis Pipeline
-
-Performed in `07_python_sentiment_analysis.py` using **NLTK VADER**:
-
-- **Data Ingestion:** Connected to SQL Server via `pyodbc` to fetch `fact_customer_reviews`
-- **Sentiment Scoring:** Applied VADER `SentimentIntensityAnalyzer` to produce compound scores (–1.0 to +1.0) for each review
-- **Sentiment Categorization:** Combined text score + star rating into 5 categories: `Positive`, `Negative`, `Mixed Positive`, `Mixed Negative`, `Neutral`
-- **Sentiment Bucketing:** Grouped compound scores into four ranges: `0.5–1.0`, `0.0–0.49`, `–0.49–0.0`, `–1.0–0.5`
-- **Output:** Exported enriched dataset to `08_output_reviews_with_sentiment.csv` for Power BI ingestion
-
----
-
-## 📊 Power BI Dashboard
-
-Built in `10_powerbi_dashboard.pbix` with a custom DAX calendar table spanning **2023–2025** (defined in `09_dax_calendar_table.txt`):
-
-**Calendar Table (DAX)** — `ADDCOLUMNS(CALENDAR(...))` generates columns for Year, Month Number, Quarter, Day of Week, and formatted date variants to support all time-intelligence measures.
-
-**Dashboard Sections:**
-
-**Conversion Rate Analysis**
-- Monthly conversion trend — highlights peaks (Feb, Jul, Dec) and low point (May at 4.3%)
-- Product-level conversion breakdown for targeted optimization
-
-**Customer Engagement Overview**
-- Views, clicks, and likes trend over time
-- CTR calculation — 15.37% of viewers interactively engage
-- Content type and campaign performance comparison
-
-**Customer Feedback Analysis**
-- Star rating distribution (1–5 stars)
-- Sentiment breakdown — Positive / Negative / Mixed / Neutral
-- Sentiment score buckets for segmentation
-
----
-
-## 📌 Business Recommendations
-
-**1. Address the May Conversion Dip**
-May showed the lowest conversion rate at 4.3% with no strong product performers. Introduce targeted promotions, time-limited offers, or improved landing pages in April–May to lift this trough.
-
-**2. Rebuild Engagement After August**
-Views peaked in February and July then declined sharply. Schedule high-impact content campaigns and seasonal pushes for Q3–Q4 to sustain audience engagement through year-end.
-
-**3. Improve Content Click-Through Quality**
-Despite a 15.37% CTR among engaged users, absolute click and like volumes remain low relative to views. A/B test stronger calls-to-action, interactive content formats, and personalized recommendations to convert passive viewers into active engagers.
-
-**4. Act on Negative Sentiment Reviews**
-82 reviews classified as Negative represent a concentrated opportunity — common themes (pricing concerns, average experience) should be used to guide product positioning, customer service scripts, and post-purchase follow-up sequences.
-
-**5. Replicate December's Success Earlier in the Year**
-Conversion rebounded strongly to 10.2% in December. Analyze what drove this (promotions, product mix, campaigns) and apply those levers to under-performing months like May and October.
-
-**6. Leverage Positive Reviews as Social Proof**
-275 Positive reviews and strong 4–5 star ratings are an underutilized asset. Incorporate review highlights into campaign creatives and product pages to reinforce trust and conversion signals.
-
 
 ## 👤 Author
 
